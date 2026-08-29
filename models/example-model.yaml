@@ -1,0 +1,19 @@
+schema_version: "0.1"
+
+id: example-video-model
+name: Example Video Model
+vendor: Example AI
+
+description: Example canonical model entry for Model Router Hub.
+
+status: active
+
+capabilities:
+  - video-generation
+
+aliases:
+  - Example-Video-Model
+  - example/video-model
+
+official_url: https://example.com
+documentation_url: https://example.com/docs
