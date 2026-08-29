@@ -1,0 +1,19 @@
+schema_version: "0.1"
+
+id: gpt-image-2
+name: GPT Image 2
+vendor: OpenAI
+
+description: Canonical GPT Image 2 image generation and image editing model entry for Model Router Hub.
+
+status: active
+
+capabilities:
+  - image-generation
+  - image-edit
+
+aliases:
+  - GPT Image 2
+  - GPT-Image-2
+  - gpt-image-2
+  - gpt image 2
