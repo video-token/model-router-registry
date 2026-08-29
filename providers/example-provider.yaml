@@ -1,0 +1,48 @@
+schema_version: "0.1"
+
+id: example-provider
+name: Example Provider
+
+description: Example AI model provider entry for Model Router Hub.
+
+website: https://example.com
+register_url: https://example.com/register
+pricing_url: https://example.com/pricing
+
+status: active
+
+company_region: Hong Kong
+
+api_regions:
+  - Hong Kong
+  - Singapore
+
+mainland_accessible: true
+proxy_required: false
+
+protocols:
+  - openai-compatible
+
+models:
+  - canonical_id: minimax-h3
+    upstream_id: MiniMax-H3
+
+    capabilities:
+      - video-generation
+
+    pricing:
+      currency: CNY
+      unit: second
+      value: 0.09
+
+  - canonical_id: gpt-image-2
+    upstream_id: gpt-image-2
+
+    capabilities:
+      - image-generation
+      - image-edit
+
+    pricing:
+      currency: CNY
+      unit: image
+      value: 0.03
