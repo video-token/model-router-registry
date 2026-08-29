@@ -1,0 +1,17 @@
+schema_version: "0.1"
+
+id: minimax-h3
+name: MiniMax H3
+vendor: MiniMax
+
+description: Canonical MiniMax H3 video generation model entry for Model Router Hub.
+
+status: active
+
+capabilities:
+  - video-generation
+
+aliases:
+  - MiniMax-H3
+  - minimax-h3
+  - MiniMax H3
