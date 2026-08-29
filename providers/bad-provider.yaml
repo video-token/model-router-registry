@@ -1,0 +1,19 @@
+schema_version: "0.1"
+
+id: BAD PROVIDER
+name: Bad Provider
+
+website: not-a-valid-url
+
+status: active
+
+company_region: Test
+
+protocols:
+  - openai-compatible
+
+models:
+  - canonical_id: minimax-h3
+    upstream_id: MiniMax-H3
+    capabilities:
+      - video-generation
