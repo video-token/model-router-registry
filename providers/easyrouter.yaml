@@ -1,0 +1,70 @@
+schema_version: "0.2"
+
+id: easyrouter
+name: EasyRouter
+
+description: AI API gateway providing unified access to multiple text, image and video models.
+
+website: https://easyrouter.io
+register_url: https://easyrouter.io/register
+pricing_url: https://easyrouter.io/pricing
+documentation_url: https://docs.easyrouter.io
+
+status: active
+
+mainland_accessible: false
+
+protocols:
+  - openai-compatible
+
+auth:
+  type: bearer
+
+endpoints:
+  - name: Global API
+    base_url: https://easyrouter.io/v1
+    region: Global
+    protocol: openai-compatible
+    status: active
+
+models:
+  - canonical_id: minimax-h3
+    upstream_id: MiniMax-H3
+
+    capabilities:
+      - video-generation
+
+    pricing:
+      - currency: USD
+        unit: second
+        value: 0.13
+        availability: available
+        source_url: https://docs.easyrouter.io/zh/docs/api/ai-model/videos/minimax-h3
+
+        conditions:
+          resolution: 2K
+          variant: standard
+
+      - currency: USD
+        unit: second
+        value: 0.09
+        availability: unavailable
+        source_url: https://docs.easyrouter.io/zh/docs/api/ai-model/videos/minimax-h3
+
+        conditions:
+          resolution: 768P
+          variant: standard
+          notes: Listed by Provider but currently unavailable.
+
+  - canonical_id: seedance-2-0
+    upstream_id: dreamina-seedance-2-0
+
+    capabilities:
+      - video-generation
+
+  - canonical_id: gpt-image-2
+    upstream_id: gpt-image-2
+
+    capabilities:
+      - image-generation
+      - image-edit
