@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "providers/**"
+      - "models/**"
       - "schema/**"
       - "scripts/validate_providers.py"
       - ".github/workflows/validate-providers.yml"
@@ -13,6 +14,7 @@ on:
       - main
     paths:
       - "providers/**"
+      - "models/**"
       - "schema/**"
       - "scripts/validate_providers.py"
       - ".github/workflows/validate-providers.yml"
@@ -39,6 +41,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install PyYAML jsonschema
 
-      - name: Validate provider registry
+      - name: Validate model and provider registry
         run: |
           python scripts/validate_providers.py
