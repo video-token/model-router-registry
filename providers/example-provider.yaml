@@ -24,8 +24,8 @@ protocols:
   - openai-compatible
 
 models:
-  - canonical_id: minimax-h3
-    upstream_id: MiniMax-H3
+  - canonical_id: example-video-model
+    upstream_id: Example-Video-Model
 
     capabilities:
       - video-generation
@@ -34,15 +34,3 @@ models:
       currency: CNY
       unit: second
       value: 0.09
-
-  - canonical_id: gpt-image-2
-    upstream_id: gpt-image-2
-
-    capabilities:
-      - image-generation
-      - image-edit
-
-    pricing:
-      currency: CNY
-      unit: image
-      value: 0.03
