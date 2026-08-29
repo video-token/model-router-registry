@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.video-token.com/schema/model.schema.json",
+  "title": "Model Router Hub Model Schema",
+  "description": "Canonical model definition used by Model Router Hub.",
+  "type": "object",
+  "additionalProperties": false,
+
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "vendor",
+    "status",
+    "capabilities"
+  ],
+
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1"
+    },
+
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,79}$",
+      "description": "Canonical model ID used across Model Router Hub."
+    },
+
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+
+    "vendor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+
+    "description": {
+      "type": "string",
+      "maxLength": 500
+    },
+
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "preview",
+        "deprecated",
+        "inactive"
+      ]
+    },
+
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "text-generation",
+          "image-generation",
+          "image-edit",
+          "video-generation",
+          "audio-generation",
+          "speech-to-text",
+          "text-to-speech",
+          "embedding"
+        ]
+      }
+    },
+
+    "aliases": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+
+    "official_url": {
+      "type": "string",
+      "format": "uri"
+    },
+
+    "documentation_url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}
