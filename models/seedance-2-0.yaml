@@ -1,0 +1,18 @@
+schema_version: "0.1"
+
+id: seedance-2-0
+name: Seedance 2.0
+vendor: ByteDance
+
+description: Canonical Seedance 2.0 video generation model entry for Model Router Hub.
+
+status: active
+
+capabilities:
+  - video-generation
+
+aliases:
+  - Seedance 2.0
+  - Seedance-2.0
+  - seedance-2.0
+  - seedance2.0
