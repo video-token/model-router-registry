@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://www.video-token.com/schema/provider.schema.json",
   "title": "Model Router Hub Provider Schema",
-  "description": "Schema for providers listed in the Model Router Hub public registry.",
+  "description": "Schema for AI model providers listed in the Model Router Hub public registry.",
   "type": "object",
   "additionalProperties": false,
 
@@ -12,7 +12,6 @@
     "name",
     "website",
     "status",
-    "company_region",
     "protocols",
     "models"
   ],
@@ -20,13 +19,13 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "const": "0.1"
+      "const": "0.2"
     },
 
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]{1,63}$",
-      "description": "Unique provider identifier."
+      "description": "Unique Provider ID used by Model Router Hub."
     },
 
     "name": {
@@ -55,6 +54,11 @@
       "format": "uri"
     },
 
+    "documentation_url": {
+      "type": "string",
+      "format": "uri"
+    },
+
     "status": {
       "type": "string",
       "enum": [
@@ -67,7 +71,7 @@
 
     "company_region": {
       "type": "string",
-      "description": "Declared operating region of the provider."
+      "description": "Provider-declared operating or registration region. Optional when unknown."
     },
 
     "api_regions": {
@@ -79,11 +83,13 @@
     },
 
     "mainland_accessible": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Provider-declared Mainland China accessibility. Independent benchmark data is maintained separately."
     },
 
     "proxy_required": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Whether the Provider declares that a proxy is normally required."
     },
 
     "protocols": {
@@ -101,9 +107,88 @@
       }
     },
 
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+
+      "required": [
+        "type"
+      ],
+
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "bearer",
+            "x-api-key",
+            "custom-header",
+            "query",
+            "none"
+          ]
+        },
+
+        "header_name": {
+          "type": "string"
+        }
+      }
+    },
+
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+
+        "required": [
+          "name",
+          "base_url",
+          "protocol",
+          "status"
+        ],
+
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+
+          "base_url": {
+            "type": "string",
+            "format": "uri"
+          },
+
+          "region": {
+            "type": "string"
+          },
+
+          "protocol": {
+            "type": "string",
+            "enum": [
+              "openai-compatible",
+              "anthropic-compatible",
+              "gemini-compatible",
+              "custom"
+            ]
+          },
+
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "beta",
+              "maintenance",
+              "inactive"
+            ]
+          }
+        }
+      }
+    },
+
     "models": {
       "type": "array",
       "minItems": 1,
+
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -116,64 +201,120 @@
 
         "properties": {
           "canonical_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Canonical Model Router Hub model ID."
           },
 
           "upstream_id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "description": "Actual model identifier used by this Provider."
           },
 
           "capabilities": {
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
+
             "items": {
               "type": "string",
               "enum": [
-                "text",
+                "text-generation",
                 "image-generation",
                 "image-edit",
                 "video-generation",
-                "audio",
+                "audio-generation",
+                "speech-to-text",
+                "text-to-speech",
                 "embedding"
               ]
             }
           },
 
           "pricing": {
-            "type": "object",
-            "additionalProperties": false,
+            "type": "array",
 
-            "required": [
-              "currency",
-              "unit",
-              "value"
-            ],
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
 
-            "properties": {
-              "currency": {
-                "type": "string",
-                "enum": [
-                  "CNY",
-                  "USD"
-                ]
-              },
+              "required": [
+                "currency",
+                "unit",
+                "value",
+                "availability"
+              ],
 
-              "unit": {
-                "type": "string",
-                "enum": [
-                  "request",
-                  "image",
-                  "second",
-                  "minute",
-                  "1m_input_tokens",
-                  "1m_output_tokens"
-                ]
-              },
+              "properties": {
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "CNY",
+                    "USD"
+                  ]
+                },
 
-              "value": {
-                "type": "number",
-                "minimum": 0
+                "unit": {
+                  "type": "string",
+                  "enum": [
+                    "request",
+                    "image",
+                    "second",
+                    "minute",
+                    "1m_input_tokens",
+                    "1m_output_tokens",
+                    "1m_tokens"
+                  ]
+                },
+
+                "value": {
+                  "type": "number",
+                  "minimum": 0
+                },
+
+                "availability": {
+                  "type": "string",
+                  "enum": [
+                    "available",
+                    "unavailable",
+                    "beta",
+                    "unknown"
+                  ]
+                },
+
+                "source_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+
+                "conditions": {
+                  "type": "object",
+                  "additionalProperties": false,
+
+                  "properties": {
+                    "resolution": {
+                      "type": "string"
+                    },
+
+                    "quality": {
+                      "type": "string"
+                    },
+
+                    "variant": {
+                      "type": "string"
+                    },
+
+                    "duration_seconds": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+
+                    "notes": {
+                      "type": "string",
+                      "maxLength": 300
+                    }
+                  }
+                }
               }
             }
           }
